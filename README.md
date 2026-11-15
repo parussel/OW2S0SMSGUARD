@@ -23,6 +23,16 @@ Plausibilitätsprüfung bleibt unabhängig von der Rechnerplattform sinnvoll, um
 formal gültige Fehlmessungen und eine mögliche Sensoralterung sichtbar zu
 machen.
 
+`INTERVAL` legt den zeitlichen Abstand zwischen zwei vollständigen
+Abfragezyklen fest. `DELAY` staffelt innerhalb eines Zyklus die Abfragen der
+einzelnen DS18x-Sensoren, damit nicht alle Sensoren unmittelbar nacheinander
+angesprochen werden. Das Modul plant eine Sensorabfrage ungefähr nach
+`1 + Busnummer × DELAY` Sekunden ein und warnt, wenn
+`Anzahl der Sensoren × DELAY + 1` das konfigurierte Intervall erreicht oder
+überschreitet. Bei der genannten Aufteilung ergeben sich für beide Master rund
+21 Sekunden Staffelungszeit; damit bleibt ausreichend Abstand zu den
+Abfrageintervallen von 90 beziehungsweise 60 Sekunden.
+
 > **Status:** Erste öffentliche 153er-netz.de-Version. Dies ist kein offizieller
 > Bestandteil von FHEM. Vor der Installation eine Sicherung anlegen und die
 > Sensorwerte nach der Umstellung beobachten. Einsatz in eigener Verantwortung.
