@@ -40,6 +40,13 @@
 #   plausibilityAnomalyCount, plausibilityLastAnomaly
 # New set command (DS18x subdevices):
 #   resetPlausibility
+#
+# Correction by Frank Parussel / 153er-netz.de, 2026-11-16 00:27 CET:
+# - invalidate the cached client list of OW2S0SMSGUARD master devices during
+#   module reload so Dispatch rebuilds the current client/MatchRe assignment
+# - AutoCreate intentionally continues to set event-on-change-reading and
+#   timestamp-on-change-reading; timestamp-based watchdogs such as PID20 must
+#   check whether timestamp-on-change-reading is suitable for their timeout
 
 package FHEM::OW2S0SMSGUARD;  ## no critic 'package'
 
@@ -103,6 +110,15 @@ if (-e $attr{global}{modpath}.'/FHEM/Meta.pm') {
 
 sub Initialize {
     my $hash = shift;
+
+    # A module reload rebuilds Match/MatchRe, but FHEM keeps the IO devices'
+    # cached client arrays.  Drop only this module's master caches so the next
+    # Dispatch recomputes both the client list and MatchRe.
+    foreach my $dhash (values %defs) {
+	next if (($dhash->{TYPE} // '') ne 'OW2S0SMSGUARD');
+	next if (($dhash->{addr} // '') ne 'master');
+	delete $dhash->{'.clientArray'};
+    }
 
     $hash->{Clients}    = ':OW2S0SMSGUARD:';
     $hash->{MatchList}  = { '1:OW2S0SMSGUARD' => '^OW.*' };
@@ -1116,6 +1132,9 @@ FHEM Forum (current module thread after forum migration): <a href='https://forum
 <p><b>Local extension by Frank Parussel / 153er-netz.de, 2026-11-15</b><br>
 This installation adds an optional and backward-compatible plausibility check for DS18x sensors. Suspicious measurements are withheld while a real temperature change is confirmed. Diagnostics remain visible per sensor and can be reset after replacing a sensor.</p>
 
+<p><b>Correction by Frank Parussel / 153er-netz.de, 2026-11-16 00:27 CET</b><br>
+Reloading the module now invalidates the cached client list of its master devices, so FHEM rebuilds the current client and MatchRe assignment and sensor readings continue after a reload. AutoCreate intentionally continues to set <code>event-on-change-reading</code> and <code>timestamp-on-change-reading</code>. For timestamp-based watchdogs such as PID20, verify whether <code>timestamp-on-change-reading</code> is suitable for the configured timeout. See the <a href='https://github.com/parussel/PID20'>PID20 Community Edition and its pidSensorTimeout help</a>.</p>
+
  <a name="OW2S0SMSGUARDdefine"></a>
  <b>Define</b>
   <ul>
@@ -1191,6 +1210,9 @@ FHEM-Forum (aktueller Modul-Thread nach der Forenumstellung): <a href='https://f
 
 <p><b>Lokale Erweiterung durch Frank Parussel / 153er-netz.de, 15.11.2026</b><br>
 Diese Installation ergänzt eine optionale und abwärtskompatible Plausibilitätsprüfung für DS18x-Sensoren. Verdächtige Messwerte werden zurückgehalten, während eine reale Temperaturänderung bestätigt wird. Die Diagnose bleibt je Sensor sichtbar und kann nach einem Sensortausch zurückgesetzt werden.</p>
+
+<p><b>Korrektur durch Frank Parussel / 153er-netz.de, 16.11.2026 00:27 Uhr</b><br>
+Beim Neuladen des Moduls wird nun der zwischengespeicherte Client-Cache seiner Master-Geräte verworfen. Dadurch baut FHEM die aktuelle Client- und MatchRe-Zuordnung neu auf und die Sensorwerte laufen nach einem Reload weiter. AutoCreate setzt weiterhin absichtlich <code>event-on-change-reading</code> und <code>timestamp-on-change-reading</code>. Bei zeitstempelbasierten Ausfallüberwachungen wie PID20 ist zu prüfen, ob <code>timestamp-on-change-reading</code> zum eingestellten Timeout passt. Siehe <a href='https://github.com/parussel/PID20'>PID20 Community Edition und die Hilfe zu pidSensorTimeout</a>.</p>
 
  <a name="OW2S0SMSGUARDdefine"></a>
   <b>Define</b>

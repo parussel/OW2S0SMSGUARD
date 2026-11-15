@@ -49,6 +49,20 @@ Moduldatei erhalten. Die Community-Erweiterung vom 15.11.2026 wird von
 Frank Parussel / [153er-netz.de](https://153er-netz.de/seiten/entwicklung/fhem.html)
 gepflegt.
 
+## Letzte Korrektur
+
+**16.11.2026, 00:27 Uhr:** Beim Neuladen des Moduls wird nun der
+zwischengespeicherte Client-Cache der OW2S0SMSGUARD-Master verworfen. FHEM
+baut dadurch die aktuelle Client-/MatchRe-Zuordnung neu auf und die
+Sensorwerte laufen nach einem Reload weiter. Caches anderer Gerätetypen
+bleiben unangetastet.
+
+AutoCreate setzt weiterhin bewusst `event-on-change-reading` und
+`timestamp-on-change-reading`. Bei nachgelagerten, zeitstempelbasierten
+Ausfallüberwachungen ist zu prüfen, ob `timestamp-on-change-reading` zum
+eingestellten Timeout passt. Das betrifft beispielsweise PID20; siehe hierzu
+die [PID20 Community Edition und die Hilfe zu `pidSensorTimeout`](https://github.com/parussel/PID20).
+
 ## Hintergrund
 
 Der Bedarf entstand aus einer Diskussion mit Wzut im FHEM-Forum:

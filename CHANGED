@@ -1,3 +1,12 @@
+2026-11-16 00:27 CET
+- Reload-Korrektur: Der Client-Cache der OW2S0SMSGUARD-Master wird beim
+  Neuladen des Moduls verworfen, damit FHEM die aktuelle Client-/MatchRe-
+  Zuordnung neu aufbaut und die Sensorwerte weiterlaufen.
+- AutoCreate setzt weiterhin bewusst `event-on-change-reading` und
+  `timestamp-on-change-reading`. Bei zeitstempelbasierten Überwachungen wie
+  PID20 ist die Eignung von `timestamp-on-change-reading` zu prüfen; dazu ist
+  die PID20-Hilfe verlinkt.
+
 2026-11-15
 - Erste öffentliche 153er-netz.de Community-Erweiterung.
 - Optionale, standardmäßig deaktivierte DS18x-Plausibilitätsprüfung.

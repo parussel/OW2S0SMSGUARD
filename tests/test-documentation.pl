@@ -20,5 +20,8 @@ for my $reading (qw(temperatureRaw plausibilityStatus plausibilityPendingCount p
 }
 like($source, qr{resetPlausibility}, 'reset command is documented');
 like($source, qr{Lokale Erweiterung durch Frank Parussel / 153er-netz\.de}, 'German help contains full local extension notice');
+like($source, qr{16\.11\.2026.*00:27.*Client-Cache}s, 'latest reload correction is documented with date and time');
+like($source, qr{timestamp-on-change-reading.*PID20}s, 'AutoCreate timestamp note cross-references PID20');
+like($source, qr{https://github\.com/parussel/PID20}, 'PID20 project link is documented');
 
 done_testing();
