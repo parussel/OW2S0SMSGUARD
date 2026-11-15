@@ -4,6 +4,14 @@ Eine kompatible und eigenständig installierbare Erweiterung des ursprünglichen
 FHEM-Moduls `00_OW2S0SMSGUARD.pm` von Wzut für den 1-Wire-USB-Master mit zwei
 S0-Schnittstellen von SMS-Guard.
 
+Die Erweiterung wurde notwendig, weil die vorhandene CRC-Prüfung zwar Fehler
+bei der Datenübertragung erkennt, aber keine formal korrekt übertragenen und
+dennoch falschen Sensorwerte innerhalb des zulässigen Temperaturbereichs.
+Auch eine reine Prüfung auf feste Mindest- und Höchstwerte konnte solche
+plausibel erscheinenden Fehlmessungen nicht erkennen. Die zunächst verwendete
+Lösung über `userReadings` musste außerdem an jedem einzelnen Sensor gepflegt
+werden und wurde mit mehr als 60 Sensoren unnötig aufwendig und unübersichtlich.
+
 > **Status:** Erste öffentliche 153er-netz.de-Version. Dies ist kein offizieller
 > Bestandteil von FHEM. Vor der Installation eine Sicherung anlegen und die
 > Sensorwerte nach der Umstellung beobachten. Einsatz in eigener Verantwortung.
@@ -179,6 +187,11 @@ Im Verzeichnis [`examples`](examples/README.md) liegt eine dynamische
 Diagnoseübersicht für den FHEM-Raum `Diagnose`. Sie ermittelt alle
 `OW2S0SMSGUARD`-Subdevices automatisch und zeigt Status, Anomalien,
 Bestätigungsmessungen, verworfene Werte und die letzte Anomalie farbig an.
+Dadurch lassen sich Sensoren mit ungewöhnlich vielen Auffälligkeiten schnell
+erkennen. Ein im Vergleich zu den übrigen Sensoren zunehmend hoher Zähler kann
+ein früher Hinweis auf Alterung, einen Kontaktfehler oder einen beginnenden
+Sensordefekt sein und ermöglicht eine gezielte Kontrolle beziehungsweise einen
+rechtzeitigen Austausch.
 
 Die Anzeige gehört bewusst nicht zum automatischen Modulupdate, da sie eine
 persönliche FHEMWEB-Oberfläche ergänzt. Installation und Entfernung sind in

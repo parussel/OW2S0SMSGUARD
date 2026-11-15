@@ -3,6 +3,13 @@
 Die optionale Anzeige listet alle vorhandenen `OW2S0SMSGUARD`-Subdevices
 dynamisch auf. Der Master wird nicht als Sensorzeile dargestellt.
 
+Die gemeinsame Übersicht macht Sensoren mit ungewöhnlich vielen Anomalien oder
+verworfenen Messwerten unmittelbar sichtbar. Steigen diese Zähler bei einem
+einzelnen Sensor im Vergleich zu den übrigen Sensoren auffällig an, kann das
+ein Hinweis auf Alterung, Kontaktprobleme oder einen beginnenden Hardwaredefekt
+sein. Die Anzeige schaltet den Sensor nicht ab, sondern liefert die Grundlage
+für eine gezielte Prüfung und die Entscheidung über einen Austausch.
+
 Angezeigt werden:
 
 - Sensorname und Alias;
