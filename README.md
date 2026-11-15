@@ -33,6 +33,13 @@ angesprochen werden. Das Modul plant eine Sensorabfrage ungefähr nach
 21 Sekunden Staffelungszeit; damit bleibt ausreichend Abstand zu den
 Abfrageintervallen von 90 beziehungsweise 60 Sekunden.
 
+Die Plausibilitätsprüfung greift technisch bei den vom Modul unterstützten
+DS18x-Temperatursensoren DS1820/DS18S20, DS18B20 und DS1822. In der hier
+beschriebenen Installation werden ausschließlich DS18B20 eingesetzt; mit
+diesen Sensoren wurde die Erweiterung praktisch eingesetzt und getestet. Die
+Verwendung mit den übrigen DS18x-Modellen ist deshalb derzeit als nicht
+praktisch getestet anzusehen.
+
 > **Status:** Erste öffentliche 153er-netz.de-Version. Dies ist kein offizieller
 > Bestandteil von FHEM. Vor der Installation eine Sicherung anlegen und die
 > Sensorwerte nach der Umstellung beobachten. Einsatz in eigener Verantwortung.
