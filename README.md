@@ -12,6 +12,17 @@ plausibel erscheinenden Fehlmessungen nicht erkennen. Die zunächst verwendete
 Lösung über `userReadings` musste außerdem an jedem einzelnen Sensor gepflegt
 werden und wurde mit mehr als 60 Sensoren unnötig aufwendig und unübersichtlich.
 
+Die auffälligen Messwerte wurden ursprünglich auf einer Installation mit einem
+Raspberry Pi 3 beobachtet. Dabei waren die Sensoren nicht an einem einzigen
+Busmaster angeschlossen, sondern auf zwei SMS-Guard-Module verteilt: Ein Master
+verwaltete 20 Sensoren mit `INTERVAL 90` und `DELAY 1`, der zweite 40 Sensoren
+mit `INTERVAL 60` und `DELAY 0.5`. Die heizungsnahen Messwerte wurden damit in
+einem schnelleren Zyklus erfasst als die weniger zeitkritischen Werte. Die
+Anlage läuft inzwischen auf einem Raspberry Pi 4 mit 8 GB Arbeitsspeicher; die
+Plausibilitätsprüfung bleibt unabhängig von der Rechnerplattform sinnvoll, um
+formal gültige Fehlmessungen und eine mögliche Sensoralterung sichtbar zu
+machen.
+
 > **Status:** Erste öffentliche 153er-netz.de-Version. Dies ist kein offizieller
 > Bestandteil von FHEM. Vor der Installation eine Sicherung anlegen und die
 > Sensorwerte nach der Umstellung beobachten. Einsatz in eigener Verantwortung.
