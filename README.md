@@ -92,6 +92,39 @@ Beispiel:
 attr EG_Bad_RL plausibilityCheck 1
 ```
 
+## Funktionsweise des Prüfverfahrens
+
+Mit den Standardwerten arbeitet die Prüfung wie folgt:
+
+- `plausibilityMaxDelta = 20`: Eine Abweichung bis einschließlich 20 °C vom
+  letzten freigegebenen Wert wird sofort übernommen. Erst eine größere
+  Abweichung startet die Bestätigungsprüfung.
+- `plausibilityConfirmations = 3`: Der erste auffällige Wert zählt bereits als
+  erste Bestätigung. Zwei weitere passende Messungen sind erforderlich.
+- `plausibilityConfirmTolerance = 1`: Die Bestätigungswerte dürfen höchstens
+  1 °C vom zuerst vorgemerkten Kandidaten abweichen.
+- `plausibilityMin = -50` und `plausibilityMax = 100`: Werte außerhalb dieses
+  absoluten Bereichs werden niemals durch Wiederholung freigegeben.
+
+Alle Grenzwerte sind Attribute und können je Sensor an die eigene Anlage
+angepasst werden. Die genannten Werte sind lediglich die Voreinstellungen.
+
+Ausgehend von einem zuletzt freigegebenen Wert von 22,0 °C ergeben sich zum
+Beispiel folgende Abläufe:
+
+| Messfolge | Ergebnis |
+|---|---|
+| `22,0 → 55,0 → 22,1` | 55,0 °C wird zurückgehalten. Die Rückkehr auf 22,1 °C wird sofort freigegeben und der einzelne Ausreißer als Anomalie gezählt. |
+| `22,0 → 55,0 → 55,4 → 54,8` | 55,0 °C ist Bestätigung 1 von 3. Die beiden folgenden Werte liegen innerhalb der Toleranz; der dritte Wert wird als reale Änderung freigegeben. |
+| `22,0 → 55,0 → 57,0 → 57,3 → 56,8` | 57,0 °C liegt außerhalb der Toleranz zum ersten Kandidaten. Die Bestätigung beginnt deshalb bei 57,0 °C erneut; 56,8 °C wird als dritte passende Messung freigegeben. |
+| `22,0 → 120,0 → 120,0 → 120,0` | 120,0 °C liegt außerhalb des absoluten Bereichs und wird auch nach Wiederholungen nicht freigegeben. Der Status bleibt `fault`. |
+
+Die Formulierung „großer Sprung“ bezeichnet somit keine feste Grenze im
+Programm, sondern eine Überschreitung des einstellbaren Attributs
+`plausibilityMaxDelta`. Während einer Bestätigung bleibt im Reading
+`temperature` der letzte freigegebene Wert erhalten; die aktuelle ungefilterte
+Messung ist weiterhin in `temperatureRaw` sichtbar.
+
 ## Neue Diagnose-Readings
 
 | Reading | Bedeutung |
